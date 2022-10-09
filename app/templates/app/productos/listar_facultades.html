@@ -1,0 +1,27 @@
+{% extends 'app/base.html' %}
+
+{% block contenido %}
+{% load humanize %}
+
+<div class="card">
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-12 col-md-6 offset-md-3">
+                <table>
+                    <tr>
+                        <th>Facultad</th>                 
+                    </tr>
+                    {% for f in Facultades %}
+                    <tr>
+                        <td>{{ f.nombre_facultad | title }}</td>
+                    </tr>
+                    {%endfor%}   
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

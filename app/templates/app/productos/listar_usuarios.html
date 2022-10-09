@@ -1,0 +1,64 @@
+{% extends 'app/base.html' %}
+
+{% block js %}
+
+<script>
+    function eliminarUsuario(id){
+        Swal.fire({
+            "title": "¿Estas seguro?", 
+            "text": "esta acción no se puede deshacer",
+            "icon":"question",
+            "showCancelButton":true,
+            "cancelButtonText":"No, Cancelar",
+            "confirmButtonText":"Si, Eliminar",
+            "reverseButtons":true,
+            "confirmButtonColor":"#dc3545"
+        })
+        .then(function(result){
+            if(result.isConfirmed){
+                window.location.href = "/eliminar_usuario/"+id+"/"
+            }
+        })
+    }
+</script>
+
+{% endblock %}
+
+{% block contenido %}
+{% load humanize %}
+
+<div class="card">
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-12 col-md-6 offset-md-3">
+                <table>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Correo</th>
+                        <th>Password</th>
+                        <th>Rut</th>
+                        <th>Opciones</th>
+                    </tr>
+                    {% for u in Usuarios %}
+                    <tr>
+                        <td>{{ u.nombres | title }}</td>
+                        <td>{{ u.apellidos | title }}</td>
+                        <td>{{ u.correo | title  }}</td>
+                        <td>{{ u.password | title }}</td>
+                        <td>{{ u.rut_usuario | title  }}</td>
+                        <td>
+                            <a href="{% url 'modificar_usuario' u.id %}" class="btn btn-info btn-sm">Modificar</a>
+                            <a href="#" onclick="eliminarUsuario({{ u.id }})" class="btn btn-info btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                    {%endfor%}   
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
