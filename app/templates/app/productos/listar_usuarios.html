@@ -41,7 +41,7 @@
                         <th>Rut</th>
                         <th>Opciones</th>
                     </tr>
-                    {% for u in Usuarios %}
+                    {% for u in entity %}
                     <tr>
                         <td>{{ u.nombres | title }}</td>
                         <td>{{ u.apellidos | title }}</td>
@@ -55,6 +55,10 @@
                     </tr>
                     {%endfor%}   
                 </table>
+                <hr>
+                <div>
+                    {% include 'app/paginator.html' %}
+                </div>
             </div>
         </div>
     </div>

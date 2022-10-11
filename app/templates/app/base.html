@@ -20,97 +20,128 @@
                     <a href="{% url 'Index' %}" class="nav__link">Inicio</a>
                 </div>
             </li>
-
+            <li class="list__item">
+                <div class="list__button">
+                    <img src="{% static 'app/assets/message.svg' %}" class="list__img">
+                    <a href="{% url 'Contacto' %}" class="nav__link">Contacto</a>
+                </div>
+            </li>
+            
+            {% if user.is_authenticated %}
             <li class="list__item list__item--click">
                 <div class="list__button list__button--click">
                     <img src="{% static 'app/assets/docs.svg' %}" class="list__img">
                     <a href="#" class="nav__link">Servicios</a>
                     <img src="{% static 'app/assets/arrow.svg' %}" class="list__arrow">
                 </div>
+                    <ul class="list__show">
+                        <li class="list__inside">
+                            <a href="{% url 'listar_carreras' %}" class="nav__link nav__link--inside">Carreras</a>
+                        </li>
+                        <li class="list__inside">
+                            <a href="{% url 'Ramos' %}" class="nav__link nav__link--inside">Ramos</a>
+                        </li>
 
-                <ul class="list__show">
-                    <li class="list__inside">
-                        <a href="{% url 'Ciudades' %}" class="nav__link nav__link--inside">Ciudades</a>
-                    </li>
+                        <li class="list__inside">
+                            <a href="{% url 'RamoC' %}" class="nav__link nav__link--inside">Ramo Carrera</a>
+                        </li>
+                    </ul>
 
-                    <li class="list__inside">
-                        <a href="{% url 'Sedes' %}" class="nav__link nav__link--inside">Sedes</a>
-                    </li>
-                    
-                    <li class="list__inside">
-                        <a href="{% url 'Facultades' %}" class="nav__link nav__link--inside">Facultades</a>
-                    </li>
-
-                    <li class="list__inside">
-                        <a href="{% url 'Carreras' %}" class="nav__link nav__link--inside">Carreras</a>
-                    </li>
-                    
-                    <li class="list__inside">
-                        <a href="{% url 'Ramos' %}" class="nav__link nav__link--inside">Ramos</a>
-                    </li>
-
-                    <li class="list__inside">
-                        <a href="{% url 'RamoC' %}" class="nav__link nav__link--inside">Ramo Carrera</a>
-                    </li>
-
-                    <li class="list__inside">
-                        <a href="{% url 'PerfilesU' %}" class="nav__link nav__link--inside">Perfiles de Usuario</a>
-                    </li>
-
-                    <li class="list__inside">
-                        <a href="{% url 'Usuario' %}" class="nav__link nav__link--inside">Usuario</a>
-                    </li>
-
-                    <li class="list__inside">
-                        <a href="{% url 'Malla' %}" class="nav__link nav__link--inside">Malla</a>
-                    </li>
-
-                </ul>
-
-            </li>
+                </li>
+            {% if user.is_staff %}
             <li class="list__item list__item--click">
                 <div class="list__button list__button--click">
                     <img src="{% static 'app/assets/docs.svg' %}" class="list__img">
-                    <a href="#" class="nav__link">Listado</a>
+                    <a href="#" class="nav__link">Servicios</a>
                     <img src="{% static 'app/assets/arrow.svg' %}" class="list__arrow">
                 </div>
+                    <ul class="list__show">
+                        <li class="list__inside">
+                            <a href="{% url 'Ciudades' %}" class="nav__link nav__link--inside">Ciudades</a>
+                        </li>
 
-                <ul class="list__show">
-                    
+                        <li class="list__inside">
+                            <a href="{% url 'Sedes' %}" class="nav__link nav__link--inside">Sedes</a>
+                        </li>
+                        
+                        <li class="list__inside">
+                            <a href="{% url 'Facultades' %}" class="nav__link nav__link--inside">Facultades</a>
+                        </li>
 
-                    <li class="list__inside">
-                        <a href="{% url 'listar_usuarios' %}" class="nav__link nav__link--inside">Lista Usuarios</a>
-                    </li>
+                        <li class="list__inside">
+                            <a href="{% url 'Carreras' %}" class="nav__link nav__link--inside">Carreras</a>
+                        </li>
+                        
+                        <li class="list__inside">
+                            <a href="{% url 'Ramos' %}" class="nav__link nav__link--inside">Ramos</a>
+                        </li>
 
-                    <li class="list__inside">
-                        <a href="{% url 'listar_carreras' %}" class="nav__link nav__link--inside">Lista Carreras</a>
-                    </li>
+                        <li class="list__inside">
+                            <a href="{% url 'RamoC' %}" class="nav__link nav__link--inside">Ramo Carrera</a>
+                        </li>
 
-                    <li class="list__inside">
-                        <a href="{% url 'listar_ciudades' %}" class="nav__link nav__link--inside">Lista Ciudades</a>
-                    </li>
+                        <li class="list__inside">
+                            <a href="{% url 'PerfilesU' %}" class="nav__link nav__link--inside">Perfiles de Usuario</a>
+                        </li>
 
-                    <li class="list__inside">
-                        <a href="{% url 'listar_facultades' %}" class="nav__link nav__link--inside">Lista Facultades</a>
-                    </li>
+                        <li class="list__inside">
+                            <a href="{% url 'Usuario' %}" class="nav__link nav__link--inside">Usuario</a>
+                        </li>
+
+                        <li class="list__inside">
+                            <a href="{% url 'Malla' %}" class="nav__link nav__link--inside">Malla</a>
+                        </li>
+                        
+                    </ul>
+
+                </li>
+                <li class="list__item list__item--click">
+                    <div class="list__button list__button--click">
+                        <img src="{% static 'app/assets/docs.svg' %}" class="list__img">
+                        <a href="#" class="nav__link">Listado</a>
+                        <img src="{% static 'app/assets/arrow.svg' %}" class="list__arrow">
+                    </div>
+
+                    <ul class="list__show">
+                        
+
+                        <li class="list__inside">
+                            <a href="{% url 'listar_usuarios' %}" class="nav__link nav__link--inside">Lista Usuarios</a>
+                        </li>
+
+                        <li class="list__inside">
+                            <a href="{% url 'listar_carreras' %}" class="nav__link nav__link--inside">Lista Carreras</a>
+                        </li>
+
+                        <li class="list__inside">
+                            <a href="{% url 'listar_ciudades' %}" class="nav__link nav__link--inside">Lista Ciudades</a>
+                        </li>
+
+                        <li class="list__inside">
+                            <a href="{% url 'listar_facultades' %}" class="nav__link nav__link--inside">Lista Facultades</a>
+                        </li>
 
 
-                </ul>
+                    </ul>
 
+                </li>
+            <li><a href="{% url 'menuadmin' %}" class="menu-btn">Menu de gestión</a></li>
+            {% endif %}
+            {% else %} 
+                <li>
+                <a href="{% url 'login' %}" class="menu-btn">Iniciar Sesion</a>
             </li>
-
-
-
-            <li class="list__item">
-                <div class="list__button">
-                    <img src="{% static 'app/assets/message.svg' %}" class="list__img">
-                    <a href="Contacto.html" class="nav__link">Contacto</a>
-                </div>
+            <li>
+                <a href="{% url 'registro' %}">Registrate</a>
             </li>
-
+            
+            {% endif%}
+            <li><a href="{% url 'logout' %}" class="menu-btn">Cerrar sesión</a></li>
+            <li><a href="#">{{ user.username }}</a></li>
+        
+            
         </ul>
     </nav>
-    
     
     <script src="{% static 'app/js/main.js' %}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>

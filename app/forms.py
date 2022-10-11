@@ -2,9 +2,12 @@ from dataclasses import fields
 from pyexpat import model
 from tkinter import Widget
 from turtle import width
+from unicodedata import name
 from django import forms
 from .models import Contacto, Usuario, Sede, Carrera, Ciudad, Facultad, Perfil, Ramo, Ramo_carrera
-
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from .validator import MaxSizeFileValidator
 
 class ContactoForm(forms.ModelForm):
 
@@ -62,8 +65,13 @@ class Ramo_carreraForm(forms.ModelForm):
         fields = '__all__'   
 
 
+class CustomUserCreationForm(UserCreationForm):
+    
+    
 
-
+    class Meta:
+        model = User
+        fields = ['username', "first_name", "last_name", "email", "password1", "password2"]
 
 
 

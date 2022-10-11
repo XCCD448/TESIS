@@ -10,14 +10,12 @@
             <div class="col-12 col-md-6 offset-md-3">
                 <table>
                     <tr>
-                        <th>Codigo carrera</th>
                         <th>Nombre carrera</th>
                         <th>Vigente</th>
                         <th>Facultad</th>
                     </tr>
                     {% for c in Carreras %}
                     <tr>
-                        <td>{{ c.codigo_carrera | title }}</td>
                         <td>{{ c.nombre_carrera | title }}</td>
                         <td>{{ c.vigente | title  }}</td>
                         <td>{{ c.facultad | title }}</td>

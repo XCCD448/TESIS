@@ -1,11 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from .models import Facultad, Usuario, Carrera, Ciudad
 from django.contrib import messages
-from .forms import ContactoForm, UsuarioForm, SedeForm, CarreraForm, CiudadForm, FacultadForm, PerfilForm, RamoForm, Ramo_carreraForm
+from .forms import ContactoForm, UsuarioForm, SedeForm, CarreraForm, CiudadForm, FacultadForm, PerfilForm, RamoForm, Ramo_carreraForm, CustomUserCreationForm
+from django.core.paginator import Paginator
+from django.http import Http404
+from django.contrib.auth import authenticate, login
+
 
 # Create your views here.
 
+@login_required
 def Carreras(request):
     data = {
         'form': CarreraForm()
@@ -21,6 +26,7 @@ def Carreras(request):
 
     return render(request, 'app/Carreras.html', data)
 
+@login_required
 def Ciudades(request):
     data = {
         'form': CiudadForm()
@@ -50,6 +56,7 @@ def Contacto(request):
 
     return render(request, 'app/Contacto.html', data)  
 
+@login_required
 def Facultades(request):
     data = {
         'form': FacultadForm()
@@ -64,15 +71,19 @@ def Facultades(request):
             data['form'] = formulario
     return render(request, 'app/Facultades.html', data)  
 
+@login_required
 def Index(request):
     return render(request, 'app/Index.html')
 
-def login(request):
-    return render(request, 'app/login.html')     
+@login_required
+def logins(request):
+    return render(request, 'registration/login.html')  
 
+@login_required
 def Malla(request):
     return render(request, 'app/Malla.html')   
-    
+
+@login_required
 def PerfilesU(request):
     data = {
         'form': PerfilForm()
@@ -87,6 +98,7 @@ def PerfilesU(request):
             data['form'] = formulario
     return render(request, 'app/PerfilesU.html', data)
 
+@login_required
 def RamoC(request):
     data = {
         'form': Ramo_carreraForm()
@@ -101,6 +113,7 @@ def RamoC(request):
             data['form'] = formulario
     return render(request, 'app/RamoC.html', data)    
 
+@login_required
 def Ramos(request):
     data = {
         'form': RamoForm()
@@ -115,6 +128,7 @@ def Ramos(request):
             data['form'] = formulario
     return render(request, 'app/Ramos.html', data) 
 
+@login_required
 def Sedes(request):
 
     data = {
@@ -131,6 +145,7 @@ def Sedes(request):
 
     return render(request, 'app/Sedes.html', data)    
 
+@login_required
 def Usuarios (request):
     data = {
         'form': UsuarioForm()
@@ -144,15 +159,25 @@ def Usuarios (request):
             data["form"] = formulario
     return render(request, 'app/Usuario.html', data)                    
 
+@login_required
 def listar_usuarios(request):
     Usuarios = Usuario.objects.all()
+    page = request.GET.get('page',1)
+
+    try:
+        paginator = Paginator(Usuarios, 2)
+        productos = paginator.page(page)
+    except:
+        raise Http404
 
     data = {
-        'Usuarios': Usuarios
+        'entity': Usuarios,
+        'paginator': paginator
     }
 
     return render(request, 'app/productos/listar_usuarios.html', data)
 
+@login_required
 def listar_carreras(request):
     Carreras = Carrera.objects.all()
 
@@ -162,6 +187,7 @@ def listar_carreras(request):
 
     return render(request, 'app/productos/listar_carreras.html', data)
 
+@login_required
 def listar_ciudades(request):
     Ciudades = Ciudad.objects.all()
 
@@ -171,6 +197,7 @@ def listar_ciudades(request):
 
     return render(request, 'app/productos/listar_ciudades.html', data)    
 
+@login_required
 def listar_facultades(request):
     Facultades = Facultad.objects.all()
 
@@ -180,7 +207,7 @@ def listar_facultades(request):
 
     return render(request, 'app/productos/listar_facultades.html', data) 
 
-
+@login_required
 def modificar_usuario(request, id):
 
     usuario = get_object_or_404(Usuario, id=id)
@@ -198,9 +225,37 @@ def modificar_usuario(request, id):
         data['form'] = formulario
 
     return render(request, 'app/productos/modificar_usuario.html', data)
-
+@login_required
 def eliminar_usuario(request, id):
     usuario = get_object_or_404(Usuario, id=id)
     usuario.delete()
     messages.success(request, "eliminado correctamente")
     return redirect(to="listar_usuarios")
+
+
+def registro(request):
+    data = {
+        'form' : CustomUserCreationForm
+    }
+
+    if request.method == 'POST':
+        formulario=CustomUserCreationForm(data=request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            #redirigir al Index
+            user = authenticate(username=formulario.cleaned_data["username"], password=formulario.cleaned_data["password1"])
+            login(request, user)
+            messages.success(request, "Te has registrado correctamente")
+            return redirect(to="Index")
+        data['form'] = formulario
+
+    return render(request, 'registration/registro.html', data)
+
+@login_required
+@permission_required('App.add_sessions')
+def menuadmin(request):
+    return render(request, 'app/menuadmin.html')
+
+@login_required
+def menuestudiannte(request):
+    return render(request, 'app/menuestudiante.html')    
