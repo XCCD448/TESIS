@@ -4,7 +4,7 @@ from tkinter import Widget
 from turtle import width
 from unicodedata import name
 from django import forms
-from .models import Contacto, Usuario, Sede, Carrera, Ciudad, Facultad, Perfil, Ramo, Ramo_carrera
+from .models import Contacto, Malla_curricular, Usuario, Sede, Carrera, Ciudad, Facultad, Perfil, Ramo, Ramo_carrera
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .validator import MaxSizeFileValidator
@@ -64,6 +64,11 @@ class Ramo_carreraForm(forms.ModelForm):
         model = Ramo_carrera
         fields = '__all__'   
 
+class MallaForm(forms.ModelForm):
+
+    class Meta:
+        model = Malla_curricular
+        fields = '__all__'  
 
 class CustomUserCreationForm(UserCreationForm):
     

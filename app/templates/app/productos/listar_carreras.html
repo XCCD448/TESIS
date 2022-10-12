@@ -2,7 +2,25 @@
 
 {% block contenido %}
 {% load humanize %}
-
+<script>
+    function eliminarCarreras(id){
+        Swal.fire({
+            "title": "¿Estas seguro?", 
+            "text": "esta acción no se puede deshacer",
+            "icon":"question",
+            "showCancelButton":true,
+            "cancelButtonText":"No, Cancelar",
+            "confirmButtonText":"Si, Eliminar",
+            "reverseButtons":true,
+            "confirmButtonColor":"#dc3545"
+        })
+        .then(function(result){
+            if(result.isConfirmed){
+                window.location.href = "/eliminar_carreras/"+id+"/"
+            }
+        })
+    }
+</script>
 <div class="card">
     <div class="card-body">
 
@@ -20,6 +38,10 @@
                         <td>{{ c.vigente | title  }}</td>
                         <td>{{ c.facultad | title }}</td>
                     </tr>
+                    <td>
+                        <a href="{% url 'modificar_carreras' c.id %}" class="btn btn-info btn-sm">Modificar</a>
+                        <a href="#" onclick="eliminarCarreras({{ c.id }})" class="btn btn-info btn-sm">Eliminar</a>
+                    </td>
                     {%endfor%}   
                 </table>
             </div>

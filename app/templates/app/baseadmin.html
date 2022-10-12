@@ -21,9 +21,19 @@
                 </div>
             </li>
 
-           
-
             {% if user.is_authenticated %}
+            <li class="list__item">
+                <div class="list__button">
+                    <img src="{% static 'app/assets/message.svg' %}" class="list__img">
+                    <a href="#">{{ user.username }}</a>
+                </div>
+            </li>
+            <li class="list__item">
+                <div class="list__button">
+                    <img src="{% static 'app/assets/dashboard.svg' %}" class="list__img">
+                    <a href="{% url 'logout' %}" class="menu-btn">Cerrar sesión</a>
+                </div>
+            </li>
             <li class="list__item">
                 <div class="list__button">
                     <img src="{% static 'app/assets/message.svg' %}" class="list__img">
@@ -31,7 +41,7 @@
                 </div>
             </li>
             {% if user.is_staff %}
-            
+          
             <li class="list__item list__item--click">
                 <div class="list__button list__button--click">
                     <img src="{% static 'app/assets/docs.svg' %}" class="list__img">
@@ -41,7 +51,7 @@
 
                 <ul class="list__show">
                     <li class="list__inside">
-                        <a href="{% url 'Ciudades' %}" class="nav__link nav__link--inside">Ciudsdsdsdades</a>
+                        <a href="{% url 'Ciudades' %}" class="nav__link nav__link--inside">Ciudades</a>
                     </li>
 
                     <li class="list__inside">
@@ -108,9 +118,6 @@
                 </ul>
 
             </li> 
-            <li><a href="{% url 'menuadmin' %}" class="menu-btn">Menu de gestión</a></li>
-            <li><a href="{% url 'logout' %}" class="menu-btn">Cerrar sesión</a></li>
-            <li><a href="#">{{ user.username }}</a></li>
             {% endif %}
             {% else %} 
          

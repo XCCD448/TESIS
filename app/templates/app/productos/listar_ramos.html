@@ -1,0 +1,64 @@
+{% extends 'app/base.html' %}
+
+{% block js %}
+
+<script>
+    function eliminarRamos(id){
+        Swal.fire({
+            "title": "¿Estas seguro?", 
+            "text": "esta acción no se puede deshacer",
+            "icon":"question",
+            "showCancelButton":true,
+            "cancelButtonText":"No, Cancelar",
+            "confirmButtonText":"Si, Eliminar",
+            "reverseButtons":true,
+            "confirmButtonColor":"#dc3545"
+        })
+        .then(function(result){
+            if(result.isConfirmed){
+                window.location.href = "/eliminar_ramos/"+id+"/"
+            }
+        })
+    }
+</script>
+{% endblock %}
+
+{% block contenido %}
+{% load humanize %}
+
+<div class="card">
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-12 col-md-6 offset-md-3">
+                <table>
+                    <tr>
+                        <th>Codigo Ramo</th>
+                        <th>Nombre Ramo</th>
+                        <th>Vigente</th>
+                        <th>Opciones</th>
+                
+                    </tr>
+                    {% for a in Ramos %}
+                    <tr>
+                        <td>{{ a.codigo_ramo | title }}</td>
+                        <td>{{ a.nombre_ramo | title }}</td>
+                        <td>{{ a.vigente | title  }}</td>
+                        <td>
+                            <a href="{% url 'modificar_ramos' a.id %}" class="btn btn-info btn-sm">Modificar</a>
+                            <a href="#" onclick="eliminarRamos({{ a.id }})" class="btn btn-info btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                    {%endfor%}   
+                </table>
+                <hr>
+                <div>
+                    {% include 'app/paginator.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

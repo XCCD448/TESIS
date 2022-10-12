@@ -1,0 +1,31 @@
+{% extends 'app/base.html' %}
+
+{% block contenido %}
+
+<div class="card">
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-12 col-md-6 offset-md-3">
+
+                <form action="" method="post">
+
+                    {% csrf_token %}
+                    {{form}}
+
+                    <div class="d-flex justify-content-center">
+                        <input type="reset" value="Cancelar" class="btn btn-secundary">
+                        <input type="submit" value="Editar" class="btn btn-primary">
+                    </div>
+                    
+                </form>
+
+                {{ mensaje }}
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

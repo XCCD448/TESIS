@@ -1,9 +1,9 @@
 {% extends 'app/base.html' %}
 
-{% block contenido %}
-{% load humanize %}
+{% block js %}
+
 <script>
-    function eliminarCiudades(id){
+    function eliminarSedes(id){
         Swal.fire({
             "title": "¿Estas seguro?", 
             "text": "esta acción no se puede deshacer",
@@ -16,11 +16,16 @@
         })
         .then(function(result){
             if(result.isConfirmed){
-                window.location.href = "/eliminar_ciudades/"+id+"/"
+                window.location.href = "/eliminar_sedes/"+id+"/"
             }
         })
     }
 </script>
+{% endblock %}
+
+{% block contenido %}
+{% load humanize %}
+
 <div class="card">
     <div class="card-body">
 
@@ -28,18 +33,26 @@
             <div class="col-12 col-md-6 offset-md-3">
                 <table>
                     <tr>
+                        <th>Nombre Sede</th>
                         <th>Ciudad</th>
+                        <th>Opciones</th>
+                
                     </tr>
-                    {% for c in Ciudades %}
+                    {% for s in Sedes %}
                     <tr>
-                        <td>{{ c.nombre_ciudad | title }}</td>
+                        <td>{{ s.nombre_sede | title }}</td>
+                        <td>{{ s.ciudad | title }}</td>
+                        <td>
+                            <a href="{% url 'modificar_sedes' s.id %}" class="btn btn-info btn-sm">Modificar</a>
+                            <a href="#" onclick="eliminarSedes({{ s.id }})" class="btn btn-info btn-sm">Eliminar</a>
+                        </td>
                     </tr>
-                    <td>
-                        <a href="{% url 'modificar_ciudades' c.id %}" class="btn btn-info btn-sm">Modificar</a>
-                        <a href="#" onclick="eliminarCiudades({{ c.id }})" class="btn btn-info btn-sm">Eliminar</a>
-                    </td>
                     {%endfor%}   
                 </table>
+                <hr>
+                <div>
+                    {% include 'app/paginator.html' %}
+                </div>
             </div>
         </div>
     </div>

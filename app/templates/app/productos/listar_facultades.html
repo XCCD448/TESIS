@@ -2,7 +2,25 @@
 
 {% block contenido %}
 {% load humanize %}
-
+<script>
+    function eliminarFacultades(id){
+        Swal.fire({
+            "title": "¿Estas seguro?", 
+            "text": "esta acción no se puede deshacer",
+            "icon":"question",
+            "showCancelButton":true,
+            "cancelButtonText":"No, Cancelar",
+            "confirmButtonText":"Si, Eliminar",
+            "reverseButtons":true,
+            "confirmButtonColor":"#dc3545"
+        })
+        .then(function(result){
+            if(result.isConfirmed){
+                window.location.href = "/eliminar_facultades/"+id+"/"
+            }
+        })
+    }
+</script>
 <div class="card">
     <div class="card-body">
 
@@ -10,12 +28,17 @@
             <div class="col-12 col-md-6 offset-md-3">
                 <table>
                     <tr>
-                        <th>Facultad</th>                 
+                        <th>Facultad</th>
+                        <th>Opciones</th>                 
                     </tr>
                     {% for f in Facultades %}
                     <tr>
                         <td>{{ f.nombre_facultad | title }}</td>
                     </tr>
+                    <td>
+                        <a href="{% url 'modificar_facultades' f.id %}" class="btn btn-info btn-sm">Modificar</a>
+                        <a href="#" onclick="eliminarFacultades({{ f.id }})" class="btn btn-info btn-sm">Eliminar</a>
+                    </td>
                     {%endfor%}   
                 </table>
             </div>
